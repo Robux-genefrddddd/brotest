@@ -76,8 +76,8 @@ export default function AdminLayout({
 
         <nav className="p-4 space-y-2">
           {adminMenuItems
-            .filter((item) => !item.founderOnly || user.role === "founder")
-            .map((item) => {
+            .filter(item => !item.founderOnly || user.role === "founder")
+            .map(item => {
               const Icon = item.icon
               return (
                 <Link

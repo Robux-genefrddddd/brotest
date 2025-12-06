@@ -4,7 +4,18 @@ import { useState, useEffect } from "react"
 import { usePathname, useRouter } from "next/navigation"
 import Link from "next/link"
 import { motion, AnimatePresence } from "framer-motion"
-import { Menu, X, LogOut, Home, MessageSquare, HelpCircle, Settings, Key, History, BarChart3 } from "lucide-react"
+import {
+  Menu,
+  X,
+  LogOut,
+  Home,
+  MessageSquare,
+  HelpCircle,
+  Settings,
+  Key,
+  History,
+  BarChart3,
+} from "lucide-react"
 import { useAuthStore } from "@/lib/stores/useAuthStore"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
@@ -153,7 +164,9 @@ export function AppSidebar() {
                 VanIA
               </h2>
               {user && (
-                <p className="text-sm text-muted-foreground mt-2">{user.email}</p>
+                <p className="text-sm text-muted-foreground mt-2">
+                  {user.email}
+                </p>
               )}
             </div>
 

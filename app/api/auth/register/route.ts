@@ -1,7 +1,15 @@
 import { NextRequest, NextResponse } from "next/server"
 import { sanitizeEmail, sanitizeInput } from "@/lib/sanitize"
-import { validateEmail, validatePassword, validateUsername } from "@/lib/validation"
-import { createApiResponse, logSecurityEvent, generateSecureId } from "@/lib/security"
+import {
+  validateEmail,
+  validatePassword,
+  validateUsername,
+} from "@/lib/validation"
+import {
+  createApiResponse,
+  logSecurityEvent,
+  generateSecureId,
+} from "@/lib/security"
 
 // Placeholder user database (in production, use Firestore)
 const users: Record<string, any> = {}
@@ -105,7 +113,8 @@ export async function POST(request: NextRequest) {
       { status: 201 }
     )
   } catch (error) {
-    const message = error instanceof Error ? error.message : "Registration failed"
+    const message =
+      error instanceof Error ? error.message : "Registration failed"
     logSecurityEvent({
       eventType: "REGISTRATION_ERROR",
       ipAddress: request.headers.get("x-forwarded-for") || "unknown",
@@ -113,9 +122,8 @@ export async function POST(request: NextRequest) {
       severity: "medium",
     })
 
-    return NextResponse.json(
-      createApiResponse(false, undefined, message),
-      { status: 400 }
-    )
+    return NextResponse.json(createApiResponse(false, undefined, message), {
+      status: 400,
+    })
   }
 }

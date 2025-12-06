@@ -5,11 +5,7 @@ import { useRouter } from "next/navigation"
 import { AppSidebar } from "@/components/app-sidebar"
 import { useAuthStore } from "@/lib/stores/useAuthStore"
 
-export default function AppLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+export default function AppLayout({ children }: { children: React.ReactNode }) {
   const router = useRouter()
   const { user } = useAuthStore()
 

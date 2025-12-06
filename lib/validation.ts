@@ -74,7 +74,8 @@ export function validateUsername(username: string): ValidationResult {
   if (!/^[a-zA-Z0-9_-]+$/.test(sanitized)) {
     return {
       valid: false,
-      error: "Username can only contain letters, numbers, hyphens, and underscores",
+      error:
+        "Username can only contain letters, numbers, hyphens, and underscores",
     }
   }
 

@@ -1,9 +1,21 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
 import { useAuthStore } from "@/lib/stores/useAuthStore"
-import { Users, MessageSquare, HelpCircle, BarChart3, AlertCircle } from "lucide-react"
+import {
+  Users,
+  MessageSquare,
+  HelpCircle,
+  BarChart3,
+  AlertCircle,
+} from "lucide-react"
 import { LoadingSpinner } from "@/components/loading-spinner"
 
 interface DashboardStats {
@@ -70,8 +82,11 @@ export default function AdminDashboard() {
           <p className="text-xs text-muted-foreground">{description}</p>
         )}
         {trend !== undefined && (
-          <p className={`text-xs ${trend >= 0 ? "text-green-600" : "text-red-600"}`}>
-            {trend > 0 ? "+" : ""}{trend}% from last month
+          <p
+            className={`text-xs ${trend >= 0 ? "text-green-600" : "text-red-600"}`}
+          >
+            {trend > 0 ? "+" : ""}
+            {trend}% from last month
           </p>
         )}
       </CardContent>
@@ -102,7 +117,9 @@ export default function AdminDashboard() {
           <CardContent className="pt-6 flex items-center gap-3">
             <AlertCircle className="w-5 h-5 text-yellow-600" />
             <div>
-              <p className="font-medium text-yellow-900">Maintenance Mode Enabled</p>
+              <p className="font-medium text-yellow-900">
+                Maintenance Mode Enabled
+              </p>
               <p className="text-sm text-yellow-800">
                 Only founder accounts can access the platform
               </p>
@@ -163,13 +180,16 @@ export default function AdminDashboard() {
               </div>
               <div>
                 <p className="text-sm text-muted-foreground">Classic</p>
-                <p className="text-2xl font-bold">{stats.usersByPlan.classic}</p>
+                <p className="text-2xl font-bold">
+                  {stats.usersByPlan.classic}
+                </p>
                 <div className="w-full bg-secondary rounded-full h-1 mt-2">
                   <div
                     className="h-full bg-purple-500 rounded-full"
                     style={{
                       width: `${
-                        (stats.usersByPlan.classic / stats.totalUsers) * 100 || 0
+                        (stats.usersByPlan.classic / stats.totalUsers) * 100 ||
+                        0
                       }%`,
                     }}
                   />

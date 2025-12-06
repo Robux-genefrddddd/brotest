@@ -108,9 +108,8 @@ export async function POST(request: NextRequest) {
       severity: "medium",
     })
 
-    return NextResponse.json(
-      createApiResponse(false, undefined, message),
-      { status: 400 }
-    )
+    return NextResponse.json(createApiResponse(false, undefined, message), {
+      status: 400,
+    })
   }
 }

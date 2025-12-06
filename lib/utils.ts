@@ -43,7 +43,8 @@ export function formatRelativeTime(date: Date | number): string {
 
   if (diffMins < 1) return "Just now"
   if (diffMins < 60) return `${diffMins} minute${diffMins !== 1 ? "s" : ""} ago`
-  if (diffHours < 24) return `${diffHours} hour${diffHours !== 1 ? "s" : ""} ago`
+  if (diffHours < 24)
+    return `${diffHours} hour${diffHours !== 1 ? "s" : ""} ago`
   if (diffDays < 7) return `${diffDays} day${diffDays !== 1 ? "s" : ""} ago`
 
   return formatDate(target)
@@ -81,7 +82,7 @@ export async function copyToClipboard(text: string): Promise<boolean> {
  * Delay execution for a specified number of milliseconds
  */
 export function delay(ms: number): Promise<void> {
-  return new Promise((resolve) => setTimeout(resolve, ms))
+  return new Promise(resolve => setTimeout(resolve, ms))
 }
 
 /**

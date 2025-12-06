@@ -4,7 +4,13 @@ import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
 import { useAuthStore } from "@/lib/stores/useAuthStore"
 import { toast } from "sonner"
 import { Key, Check, AlertCircle } from "lucide-react"
@@ -29,7 +35,11 @@ export default function LicensePage() {
     pro: {
       name: "Pro",
       quota: null,
-      features: ["Unlimited messages", "All models available", "Custom prompts"],
+      features: [
+        "Unlimited messages",
+        "All models available",
+        "Custom prompts",
+      ],
     },
   }
 
@@ -69,7 +79,9 @@ export default function LicensePage() {
       setLicenseKey("")
       toast.success(`Upgraded to ${data.newPlan} plan!`)
     } catch (error) {
-      toast.error(error instanceof Error ? error.message : "Verification failed")
+      toast.error(
+        error instanceof Error ? error.message : "Verification failed"
+      )
     } finally {
       setIsLoading(false)
     }
@@ -141,7 +153,7 @@ export default function LicensePage() {
                   id="license"
                   placeholder="XXXX-XXXX-XXXX-XXXX"
                   value={licenseKey}
-                  onChange={(e) => setLicenseKey(e.target.value.toUpperCase())}
+                  onChange={e => setLicenseKey(e.target.value.toUpperCase())}
                   disabled={isLoading}
                 />
               </div>
@@ -160,41 +172,43 @@ export default function LicensePage() {
         <div>
           <h2 className="text-xl font-semibold mb-4">Plan Comparison</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {(Object.entries(planInfo) as Array<[string, any]>).map(([key, plan]) => (
-              <Card
-                key={key}
-                className={
-                  user?.plan === key ? "border-primary border-2" : ""
-                }
-              >
-                <CardHeader>
-                  <CardTitle className="flex items-center justify-between">
-                    {plan.name}
-                    {user?.plan === key && (
-                      <Check className="w-5 h-5 text-primary" />
-                    )}
-                  </CardTitle>
-                  <CardDescription>
-                    {plan.quota
-                      ? `${plan.quota} messages/month`
-                      : "Unlimited messages"}
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <ul className="space-y-2">
-                    {plan.features.map((feature, idx) => (
-                      <li
-                        key={idx}
-                        className="flex items-center gap-2 text-sm"
-                      >
-                        <Check className="w-4 h-4 text-green-500" />
-                        {feature}
-                      </li>
-                    ))}
-                  </ul>
-                </CardContent>
-              </Card>
-            ))}
+            {(Object.entries(planInfo) as Array<[string, any]>).map(
+              ([key, plan]) => (
+                <Card
+                  key={key}
+                  className={
+                    user?.plan === key ? "border-primary border-2" : ""
+                  }
+                >
+                  <CardHeader>
+                    <CardTitle className="flex items-center justify-between">
+                      {plan.name}
+                      {user?.plan === key && (
+                        <Check className="w-5 h-5 text-primary" />
+                      )}
+                    </CardTitle>
+                    <CardDescription>
+                      {plan.quota
+                        ? `${plan.quota} messages/month`
+                        : "Unlimited messages"}
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <ul className="space-y-2">
+                      {plan.features.map((feature, idx) => (
+                        <li
+                          key={idx}
+                          className="flex items-center gap-2 text-sm"
+                        >
+                          <Check className="w-4 h-4 text-green-500" />
+                          {feature}
+                        </li>
+                      ))}
+                    </ul>
+                  </CardContent>
+                </Card>
+              )
+            )}
           </div>
         </div>
       </div>

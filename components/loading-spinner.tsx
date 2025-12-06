@@ -11,7 +11,10 @@ const sizeClasses = {
   lg: "w-12 h-12",
 }
 
-export function LoadingSpinner({ className, size = "md" }: LoadingSpinnerProps) {
+export function LoadingSpinner({
+  className,
+  size = "md",
+}: LoadingSpinnerProps) {
   return (
     <div
       className={cn(

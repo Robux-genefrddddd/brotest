@@ -6,7 +6,8 @@ const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
   title: "VanIA - AI Platform",
-  description: "Complete AI Platform with Firebase Auth, Firestore, and OpenRouter integration",
+  description:
+    "Complete AI Platform with Firebase Auth, Firestore, and OpenRouter integration",
   icons: {
     icon: "/favicon.ico",
   },
@@ -19,9 +20,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={inter.className}>
-        {children}
-      </body>
+      <body className={inter.className}>{children}</body>
     </html>
   )
 }

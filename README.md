@@ -122,23 +122,28 @@ Open [http://localhost:3000](http://localhost:3000) to see the application.
 ## API Routes
 
 ### Authentication
+
 - `POST /api/auth/register` - Register new user
 - `POST /api/auth/login` - Login user
 - `POST /api/auth/logout` - Logout user
 
 ### Chat
+
 - `POST /api/chat/send-message` - Send chat message
 - `GET /api/chat/conversations` - Get user conversations
 - `POST /api/chat/conversations` - Create conversation
 
 ### Support
+
 - `POST /api/support/send-message` - Send support message
 - `GET /api/support/tickets` - Get support tickets
 
 ### License
+
 - `POST /api/license/verify` - Verify license key
 
 ### Admin
+
 - `GET /api/admin/dashboard` - Dashboard statistics
 - `GET /api/admin/users` - List users
 - `POST /api/admin/users/ban` - Ban user
@@ -147,7 +152,9 @@ Open [http://localhost:3000](http://localhost:3000) to see the application.
 ## Security Features
 
 ### Input Sanitization
+
 All user inputs are sanitized to prevent:
+
 - XSS (Cross-Site Scripting)
 - NoSQL Injection
 - SQL Injection
@@ -155,7 +162,9 @@ All user inputs are sanitized to prevent:
 Located in `/lib/sanitize.ts`
 
 ### Firestore Security Rules
+
 Strict security rules enforce:
+
 - User can only read/write their own data
 - Admin-only operations for sensitive data
 - Prevent modification of roles, plans, and quotas
@@ -164,7 +173,9 @@ Strict security rules enforce:
 Located in `/firebase/firestore.rules`
 
 ### Role-Based Access Control (RBAC)
+
 Three roles with specific permissions:
+
 - **Founder**: Full access, can modify AI settings
 - **Admin**: Extended access, cannot modify core settings
 - **Support**: Can manage support tickets
@@ -175,20 +186,26 @@ Located in `/lib/permissions.ts`
 ## Key Components
 
 ### Sanitize Utility (`/lib/sanitize.ts`)
+
 Provides functions for sanitizing:
+
 - General input strings
 - Email addresses
 - URLs
 - JSON objects
 
 ### Permissions Utility (`/lib/permissions.ts`)
+
 Implements RBAC with:
+
 - Role-based permission checking
 - Permission lists for each role
 - Helper functions for specific access controls
 
 ### OpenRouter Integration (`/lib/openrouter.ts`)
+
 Handles AI responses with:
+
 - Chat message sending
 - Support model integration
 - Token estimation
@@ -199,6 +216,7 @@ Handles AI responses with:
 ### Collections
 
 #### Users
+
 - `id`: User ID (Firebase Auth UID)
 - `email`: User email
 - `name`: User display name
@@ -211,6 +229,7 @@ Handles AI responses with:
 - `updatedAt`: Timestamp
 
 #### Conversations
+
 - `id`: Conversation ID
 - `userId`: Owner user ID
 - `title`: Conversation title
@@ -221,6 +240,7 @@ Handles AI responses with:
 - `messages`: Array of message objects
 
 #### SupportTickets
+
 - `id`: Ticket ID
 - `userId`: Creator user ID
 - `status`: 'open' | 'in_review' | 'closed'
@@ -231,6 +251,7 @@ Handles AI responses with:
 - `closedAt`: Timestamp (optional)
 
 #### Licenses
+
 - `id`: License ID
 - `key`: License key (hashed)
 - `planTarget`: Target plan
@@ -281,6 +302,7 @@ Handles AI responses with:
 ### Other Platforms
 
 Works with any Node.js hosting that supports Next.js:
+
 - Netlify
 - Railway
 - Render

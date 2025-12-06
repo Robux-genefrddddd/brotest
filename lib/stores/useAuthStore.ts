@@ -15,24 +15,24 @@ interface AuthState {
   updateQuota: (used: number, limit: number) => void
 }
 
-export const useAuthStore = create<AuthState>((set) => ({
+export const useAuthStore = create<AuthState>(set => ({
   user: null,
   isLoading: false,
   error: null,
 
-  setUser: (user) => set({ user, error: null }),
-  setLoading: (isLoading) => set({ isLoading }),
-  setError: (error) => set({ error }),
+  setUser: user => set({ user, error: null }),
+  setLoading: isLoading => set({ isLoading }),
+  setError: error => set({ error }),
 
   logout: () => set({ user: null, error: null }),
 
-  updatePlan: (plan) =>
-    set((state) => ({
+  updatePlan: plan =>
+    set(state => ({
       user: state.user ? { ...state.user, plan } : null,
     })),
 
   updateQuota: (used, limit) =>
-    set((state) => ({
+    set(state => ({
       user: state.user
         ? { ...state.user, quotaUsed: used, quotaLimit: limit }
         : null,

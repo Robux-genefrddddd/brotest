@@ -18,9 +18,15 @@ const rateLimitStore: RateLimitStore = {}
  * Rate limiter middleware
  * Limits requests per IP address
  */
-export function createRateLimiter(maxRequests: number = 10, windowMs: number = 60000) {
+export function createRateLimiter(
+  maxRequests: number = 10,
+  windowMs: number = 60000
+) {
   return (request: NextRequest) => {
-    const ip = request.headers.get("x-forwarded-for") || request.headers.get("x-real-ip") || "unknown"
+    const ip =
+      request.headers.get("x-forwarded-for") ||
+      request.headers.get("x-real-ip") ||
+      "unknown"
     const now = Date.now()
     const key = `${ip}`
 
@@ -56,7 +62,9 @@ export function createRateLimiter(maxRequests: number = 10, windowMs: number = 6
 /**
  * Verify Firebase token from request headers
  */
-export async function verifyFirebaseToken(request: NextRequest): Promise<string | null> {
+export async function verifyFirebaseToken(
+  request: NextRequest
+): Promise<string | null> {
   const authHeader = request.headers.get("authorization")
 
   if (!authHeader || !authHeader.startsWith("Bearer ")) {
@@ -117,7 +125,8 @@ export async function verifyPasswordHash(
  */
 export function getCORSHeaders() {
   return {
-    "Access-Control-Allow-Origin": process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000",
+    "Access-Control-Allow-Origin":
+      process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000",
     "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
     "Access-Control-Allow-Headers": "Content-Type, Authorization",
     "Access-Control-Max-Age": "86400",
@@ -167,7 +176,9 @@ export interface SecurityEvent {
   severity: "low" | "medium" | "high" | "critical"
 }
 
-export function logSecurityEvent(event: Omit<SecurityEvent, "timestamp">): void {
+export function logSecurityEvent(
+  event: Omit<SecurityEvent, "timestamp">
+): void {
   const fullEvent: SecurityEvent = {
     ...event,
     timestamp: new Date(),

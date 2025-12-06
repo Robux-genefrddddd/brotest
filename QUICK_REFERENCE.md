@@ -5,6 +5,7 @@ Quick lookup for common development tasks.
 ## 🔐 Security Functions
 
 ### Sanitize Input
+
 ```typescript
 import { sanitizeInput, sanitizeMessage, sanitizeEmail } from "@/lib/sanitize"
 
@@ -19,6 +20,7 @@ const email = sanitizeEmail(userEmail)
 ```
 
 ### Validate Input
+
 ```typescript
 import {
   validateEmail,
@@ -33,6 +35,7 @@ if (!emailVal.valid) console.error(emailVal.error)
 ```
 
 ### API Security
+
 ```typescript
 import { createApiResponse, logSecurityEvent } from "@/lib/security"
 
@@ -52,6 +55,7 @@ logSecurityEvent({
 ## 🎨 Component Usage
 
 ### Loading Spinner
+
 ```typescript
 import { LoadingSpinner } from "@/components/loading-spinner"
 
@@ -59,6 +63,7 @@ import { LoadingSpinner } from "@/components/loading-spinner"
 ```
 
 ### Animated Loading Dots
+
 ```typescript
 import { AnimatedLoadingDots } from "@/components/animated-loading-dots"
 
@@ -66,6 +71,7 @@ import { AnimatedLoadingDots } from "@/components/animated-loading-dots"
 ```
 
 ### shadcn Components
+
 ```typescript
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -84,6 +90,7 @@ import { Dialog, DialogContent } from "@/components/ui/dialog"
 ## 📦 State Management
 
 ### Auth Store
+
 ```typescript
 import { useAuthStore } from "@/lib/stores/useAuthStore"
 
@@ -100,6 +107,7 @@ logout()
 ```
 
 ### Chat Store
+
 ```typescript
 import { useChatStore } from "@/lib/stores/useChatStore"
 
@@ -115,6 +123,7 @@ const {
 ## 🔌 API Calls
 
 ### With Authentication
+
 ```typescript
 const response = await fetch("/api/endpoint", {
   method: "POST",
@@ -130,12 +139,11 @@ if (!response.ok) throw new Error(data.error)
 ```
 
 ### OpenRouter AI
+
 ```typescript
 import { sendChatMessage, sendSupportMessage } from "@/lib/openrouter"
 
-const response = await sendChatMessage([
-  { role: "user", content: "Hello" }
-])
+const response = await sendChatMessage([{ role: "user", content: "Hello" }])
 
 const assistantMessage = response.choices[0].message.content
 ```
@@ -143,6 +151,7 @@ const assistantMessage = response.choices[0].message.content
 ## 🎯 Patterns
 
 ### Create API Route
+
 ```typescript
 // app/api/endpoint/route.ts
 import { NextRequest, NextResponse } from "next/server"
@@ -176,10 +185,7 @@ export async function POST(request: NextRequest) {
     // Perform action
     const result = await doSomething(sanitized)
 
-    return NextResponse.json(
-      createApiResponse(true, result),
-      { status: 200 }
-    )
+    return NextResponse.json(createApiResponse(true, result), { status: 200 })
   } catch (error) {
     return NextResponse.json(
       createApiResponse(false, undefined, "Server error"),
@@ -190,6 +196,7 @@ export async function POST(request: NextRequest) {
 ```
 
 ### Create Page Component
+
 ```typescript
 // app/(app)/page/page.tsx
 "use client"
@@ -253,6 +260,7 @@ export default function Page() {
 ## 🗄️ Firestore Operations
 
 ### Save User
+
 ```typescript
 // In Firestore collection 'users'
 {
@@ -270,6 +278,7 @@ export default function Page() {
 ```
 
 ### Save Conversation
+
 ```typescript
 // In Firestore collection 'conversations'
 {
@@ -284,6 +293,7 @@ export default function Page() {
 ```
 
 ### Query User Conversations
+
 ```typescript
 const q = query(
   collection(firestore, "conversations"),
@@ -298,25 +308,29 @@ const conversations = snapshot.docs.map(doc => doc.data())
 ## 🎨 Tailwind Classes
 
 ### Common Classes
+
 ```html
 <!-- Spacing -->
 <div class="p-4 m-2 gap-4 space-y-2">
-
-<!-- Sizing -->
-<div class="w-full h-screen max-w-2xl">
-
-<!-- Text -->
-<div class="text-lg font-semibold text-primary text-center">
-
-<!-- Colors -->
-<div class="bg-primary text-primary-foreground">
-<div class="border border-border bg-card">
-
-<!-- Responsive -->
-<div class="md:p-6 lg:w-1/2 grid grid-cols-1 md:grid-cols-2">
-
-<!-- Animations -->
-<div class="transition-colors hover:bg-secondary animate-spin">
+  <!-- Sizing -->
+  <div class="w-full h-screen max-w-2xl">
+    <!-- Text -->
+    <div class="text-lg font-semibold text-primary text-center">
+      <!-- Colors -->
+      <div class="bg-primary text-primary-foreground">
+        <div class="border border-border bg-card">
+          <!-- Responsive -->
+          <div class="md:p-6 lg:w-1/2 grid grid-cols-1 md:grid-cols-2">
+            <!-- Animations -->
+            <div
+              class="transition-colors hover:bg-secondary animate-spin"
+            ></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 ```
 
 ## 🔗 Links
@@ -332,6 +346,7 @@ const conversations = snapshot.docs.map(doc => doc.data())
 - Register: `/auth/register`
 
 ## 📝 Toast Notifications
+
 ```typescript
 import { toast } from "sonner"
 

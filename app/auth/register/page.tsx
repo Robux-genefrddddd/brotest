@@ -6,11 +6,21 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
 import { useAuthStore } from "@/lib/stores/useAuthStore"
 import { toast } from "sonner"
 import { sanitizeEmail } from "@/lib/sanitize"
-import { validateEmail, validatePassword, validateUsername } from "@/lib/validation"
+import {
+  validateEmail,
+  validatePassword,
+  validateUsername,
+} from "@/lib/validation"
 
 export default function RegisterPage() {
   const [username, setUsername] = useState("")
@@ -81,7 +91,9 @@ export default function RegisterPage() {
       toast.success("Account created successfully!")
       router.push("/chat")
     } catch (error) {
-      toast.error(error instanceof Error ? error.message : "Registration failed")
+      toast.error(
+        error instanceof Error ? error.message : "Registration failed"
+      )
     } finally {
       setIsLoading(false)
       setLoading(false)
@@ -109,7 +121,7 @@ export default function RegisterPage() {
                 id="username"
                 placeholder="your_username"
                 value={username}
-                onChange={(e) => setUsername(e.target.value)}
+                onChange={e => setUsername(e.target.value)}
                 disabled={isLoading}
               />
             </div>
@@ -121,7 +133,7 @@ export default function RegisterPage() {
                 type="email"
                 placeholder="you@example.com"
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={e => setEmail(e.target.value)}
                 disabled={isLoading}
               />
             </div>
@@ -133,7 +145,7 @@ export default function RegisterPage() {
                 type="password"
                 placeholder="••••••••"
                 value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={e => setPassword(e.target.value)}
                 disabled={isLoading}
               />
               <p className="text-xs text-muted-foreground">
@@ -148,7 +160,7 @@ export default function RegisterPage() {
                 type="password"
                 placeholder="••••••••"
                 value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
+                onChange={e => setConfirmPassword(e.target.value)}
                 disabled={isLoading}
               />
             </div>
@@ -161,7 +173,10 @@ export default function RegisterPage() {
           <div className="mt-4 text-center">
             <p className="text-sm text-muted-foreground">
               Already have an account?{" "}
-              <Link href="/auth/login" className="text-primary hover:underline font-medium">
+              <Link
+                href="/auth/login"
+                className="text-primary hover:underline font-medium"
+              >
                 Sign in
               </Link>
             </p>

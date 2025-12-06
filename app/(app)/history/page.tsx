@@ -60,7 +60,7 @@ export default function HistoryPage() {
           </Card>
         ) : (
           <div className="space-y-2">
-            {conversations.map((conv) => (
+            {conversations.map(conv => (
               <Card
                 key={conv.id}
                 className="p-4 hover:shadow-md transition-shadow"
@@ -69,7 +69,8 @@ export default function HistoryPage() {
                   <div className="flex-1 min-w-0">
                     <h3 className="font-medium truncate">{conv.title}</h3>
                     <p className="text-sm text-muted-foreground">
-                      {conv.messages.length} messages • {formatRelativeTime(conv.updatedAt)}
+                      {conv.messages.length} messages •{" "}
+                      {formatRelativeTime(conv.updatedAt)}
                     </p>
                   </div>
                   <Button

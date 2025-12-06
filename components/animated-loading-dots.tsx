@@ -29,9 +29,7 @@ const dotVariants = {
   },
 }
 
-export function AnimatedLoadingDots({
-  size = "md",
-}: AnimatedLoadingDotsProps) {
+export function AnimatedLoadingDots({ size = "md" }: AnimatedLoadingDotsProps) {
   return (
     <motion.div
       className="flex items-center justify-center gap-1"
@@ -39,7 +37,7 @@ export function AnimatedLoadingDots({
       initial="initial"
       animate="animate"
     >
-      {[0, 1, 2].map((i) => (
+      {[0, 1, 2].map(i => (
         <motion.div
           key={i}
           className={`rounded-full bg-primary ${sizeClasses[size]}`}

@@ -4,7 +4,13 @@ import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
 import { useAuthStore } from "@/lib/stores/useAuthStore"
 import { toast } from "sonner"
 import { Settings, Shield, Bell } from "lucide-react"
@@ -43,9 +49,7 @@ export default function SettingsPage() {
         <Card>
           <CardHeader>
             <CardTitle>Account Information</CardTitle>
-            <CardDescription>
-              View your account details
-            </CardDescription>
+            <CardDescription>View your account details</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="space-y-2">
@@ -58,11 +62,15 @@ export default function SettingsPage() {
             </div>
             <div className="space-y-2">
               <Label>Role</Label>
-              <p className="p-2 bg-secondary rounded text-sm capitalize">{user?.role}</p>
+              <p className="p-2 bg-secondary rounded text-sm capitalize">
+                {user?.role}
+              </p>
             </div>
             <div className="space-y-2">
               <Label>Current Plan</Label>
-              <p className="p-2 bg-secondary rounded text-sm capitalize">{user?.plan}</p>
+              <p className="p-2 bg-secondary rounded text-sm capitalize">
+                {user?.plan}
+              </p>
             </div>
           </CardContent>
         </Card>
@@ -102,9 +110,7 @@ export default function SettingsPage() {
         <Card>
           <CardHeader>
             <CardTitle>Security</CardTitle>
-            <CardDescription>
-              Manage your account security
-            </CardDescription>
+            <CardDescription>Manage your account security</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="flex items-center justify-between">

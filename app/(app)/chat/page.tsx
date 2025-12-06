@@ -10,7 +10,14 @@ import { useAuthStore } from "@/lib/stores/useAuthStore"
 import { Copy, Send, Plus, Trash2 } from "lucide-react"
 import { toast } from "sonner"
 import { copyToClipboard, formatRelativeTime } from "@/lib/utils"
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog"
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogFooter,
+} from "@/components/ui/dialog"
 import { cn } from "@/lib/utils"
 
 export default function ChatPage() {
@@ -44,7 +51,9 @@ export default function ChatPage() {
 
     // Check quota
     if (user.quotaUsed >= user.quotaLimit) {
-      toast.error("You've reached your message limit. Please upgrade your plan.")
+      toast.error(
+        "You've reached your message limit. Please upgrade your plan."
+      )
       return
     }
 
@@ -75,7 +84,9 @@ export default function ChatPage() {
         toast.success("Message sent successfully")
       }
     } catch (error) {
-      toast.error(error instanceof Error ? error.message : "Failed to send message")
+      toast.error(
+        error instanceof Error ? error.message : "Failed to send message"
+      )
     } finally {
       setIsLoading(false)
     }
@@ -125,7 +136,7 @@ export default function ChatPage() {
               No conversations yet. Start a new chat!
             </p>
           ) : (
-            conversations.map((conv) => (
+            conversations.map(conv => (
               <div
                 key={conv.id}
                 className={cn(
@@ -144,7 +155,7 @@ export default function ChatPage() {
                     </p>
                   </div>
                   <button
-                    onClick={(e) => {
+                    onClick={e => {
                       e.stopPropagation()
                       setDeleteId(conv.id)
                     }}
@@ -175,8 +186,8 @@ export default function ChatPage() {
                     user.quotaUsed >= user.quotaLimit
                       ? "bg-destructive"
                       : user.quotaUsed >= user.quotaLimit * 0.8
-                      ? "bg-yellow-500"
-                      : "bg-primary"
+                        ? "bg-yellow-500"
+                        : "bg-primary"
                   )}
                   style={{
                     width: `${Math.min(
@@ -199,7 +210,9 @@ export default function ChatPage() {
         {/* Header */}
         {currentConversation && (
           <div className="border-b border-border p-4">
-            <h1 className="text-lg font-semibold">{currentConversation.title}</h1>
+            <h1 className="text-lg font-semibold">
+              {currentConversation.title}
+            </h1>
             <p className="text-sm text-muted-foreground">
               Model: {currentConversation.model}
             </p>
@@ -211,7 +224,9 @@ export default function ChatPage() {
           {!currentConversation ? (
             <div className="flex items-center justify-center h-full">
               <Card className="p-12 text-center max-w-md">
-                <h2 className="text-xl font-semibold mb-2">Welcome to VanIA Chat</h2>
+                <h2 className="text-xl font-semibold mb-2">
+                  Welcome to VanIA Chat
+                </h2>
                 <p className="text-muted-foreground mb-6">
                   Select a conversation or create a new one to get started.
                 </p>
@@ -225,7 +240,7 @@ export default function ChatPage() {
                   <p className="text-muted-foreground">No messages yet</p>
                 </div>
               ) : (
-                currentConversation.messages.map((message) => (
+                currentConversation.messages.map(message => (
                   <div
                     key={message.id}
                     className={cn(
@@ -274,8 +289,8 @@ export default function ChatPage() {
               <Input
                 placeholder="Type your message..."
                 value={input}
-                onChange={(e) => setInput(e.target.value)}
-                onKeyPress={(e) => {
+                onChange={e => setInput(e.target.value)}
+                onKeyPress={e => {
                   if (e.key === "Enter" && !e.shiftKey) {
                     e.preventDefault()
                     handleSendMessage()
@@ -297,7 +312,10 @@ export default function ChatPage() {
       </div>
 
       {/* Delete Dialog */}
-      <Dialog open={deleteId !== null} onOpenChange={(open) => !open && setDeleteId(null)}>
+      <Dialog
+        open={deleteId !== null}
+        onOpenChange={open => !open && setDeleteId(null)}
+      >
         <DialogContent>
           <DialogHeader>
             <DialogTitle>Delete Conversation</DialogTitle>

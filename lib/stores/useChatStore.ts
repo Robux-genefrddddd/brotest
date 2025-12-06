@@ -21,25 +21,26 @@ interface ChatState {
   clear: () => void
 }
 
-export const useChatStore = create<ChatState>((set) => ({
+export const useChatStore = create<ChatState>(set => ({
   conversations: [],
   currentConversation: null,
   isLoading: false,
   error: null,
 
-  setConversations: (conversations) => set({ conversations }),
+  setConversations: conversations => set({ conversations }),
 
-  setCurrentConversation: (conversation) => set({ currentConversation: conversation }),
+  setCurrentConversation: conversation =>
+    set({ currentConversation: conversation }),
 
-  addConversation: (conversation) =>
-    set((state) => ({
+  addConversation: conversation =>
+    set(state => ({
       conversations: [conversation, ...state.conversations],
       currentConversation: conversation,
     })),
 
   updateConversation: (id, updates) =>
-    set((state) => ({
-      conversations: state.conversations.map((c) =>
+    set(state => ({
+      conversations: state.conversations.map(c =>
         c.id === id ? { ...c, ...updates } : c
       ),
       currentConversation:
@@ -48,15 +49,15 @@ export const useChatStore = create<ChatState>((set) => ({
           : state.currentConversation,
     })),
 
-  deleteConversation: (id) =>
-    set((state) => ({
-      conversations: state.conversations.filter((c) => c.id !== id),
+  deleteConversation: id =>
+    set(state => ({
+      conversations: state.conversations.filter(c => c.id !== id),
       currentConversation:
         state.currentConversation?.id === id ? null : state.currentConversation,
     })),
 
-  addMessage: (message) =>
-    set((state) => {
+  addMessage: message =>
+    set(state => {
       if (!state.currentConversation) return state
 
       return {
@@ -69,7 +70,7 @@ export const useChatStore = create<ChatState>((set) => ({
     }),
 
   updateLastMessage: (conversationId, updates) =>
-    set((state) => {
+    set(state => {
       if (state.currentConversation?.id !== conversationId) return state
 
       const messages = [...state.currentConversation.messages]
@@ -88,8 +89,8 @@ export const useChatStore = create<ChatState>((set) => ({
       }
     }),
 
-  setLoading: (isLoading) => set({ isLoading }),
-  setError: (error) => set({ error }),
+  setLoading: isLoading => set({ isLoading }),
+  setError: error => set({ error }),
 
   clear: () =>
     set({

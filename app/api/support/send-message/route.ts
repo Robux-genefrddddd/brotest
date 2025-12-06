@@ -61,10 +61,10 @@ export async function POST(request: NextRequest) {
       )
     }
   } catch (error) {
-    const message = error instanceof Error ? error.message : "Support request failed"
-    return NextResponse.json(
-      createApiResponse(false, undefined, message),
-      { status: 400 }
-    )
+    const message =
+      error instanceof Error ? error.message : "Support request failed"
+    return NextResponse.json(createApiResponse(false, undefined, message), {
+      status: 400,
+    })
   }
 }

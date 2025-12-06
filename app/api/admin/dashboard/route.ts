@@ -35,12 +35,12 @@ export async function GET(request: NextRequest) {
       severity: "low",
     })
 
-    return NextResponse.json(
-      createApiResponse(true, { stats }),
-      { status: 200 }
-    )
+    return NextResponse.json(createApiResponse(true, { stats }), {
+      status: 200,
+    })
   } catch (error) {
-    const message = error instanceof Error ? error.message : "Failed to fetch dashboard"
+    const message =
+      error instanceof Error ? error.message : "Failed to fetch dashboard"
     logSecurityEvent({
       eventType: "ADMIN_DASHBOARD_ERROR",
       ipAddress: request.headers.get("x-forwarded-for") || "unknown",
@@ -48,9 +48,8 @@ export async function GET(request: NextRequest) {
       severity: "medium",
     })
 
-    return NextResponse.json(
-      createApiResponse(false, undefined, message),
-      { status: 400 }
-    )
+    return NextResponse.json(createApiResponse(false, undefined, message), {
+      status: 400,
+    })
   }
 }

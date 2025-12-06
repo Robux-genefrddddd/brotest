@@ -42,7 +42,7 @@ export default function SupportPage() {
       timestamp: new Date(),
     }
 
-    setMessages((prev) => [...prev, userMessage])
+    setMessages(prev => [...prev, userMessage])
     setInput("")
     setIsLoading(true)
 
@@ -68,14 +68,18 @@ export default function SupportPage() {
       const assistantMessage: Message = {
         id: (Date.now() + 1).toString(),
         role: "assistant",
-        content: data.response || "Thank you for contacting support. We'll help you shortly.",
+        content:
+          data.response ||
+          "Thank you for contacting support. We'll help you shortly.",
         timestamp: new Date(),
       }
 
-      setMessages((prev) => [...prev, assistantMessage])
+      setMessages(prev => [...prev, assistantMessage])
     } catch (error) {
       toast.error(
-        error instanceof Error ? error.message : "Failed to send support message"
+        error instanceof Error
+          ? error.message
+          : "Failed to send support message"
       )
     } finally {
       setIsLoading(false)
@@ -105,12 +109,12 @@ export default function SupportPage() {
               <MessageSquare className="w-12 h-12 mx-auto mb-4 text-muted-foreground" />
               <h2 className="text-xl font-semibold mb-2">How can we help?</h2>
               <p className="text-muted-foreground">
-                Ask our AI support assistant anything. We're here to help you resolve issues
-                quickly.
+                Ask our AI support assistant anything. We're here to help you
+                resolve issues quickly.
               </p>
             </Card>
           ) : (
-            messages.map((message) => (
+            messages.map(message => (
               <div
                 key={message.id}
                 className={cn(
@@ -151,8 +155,8 @@ export default function SupportPage() {
           <Input
             placeholder="Describe your issue..."
             value={input}
-            onChange={(e) => setInput(e.target.value)}
-            onKeyPress={(e) => {
+            onChange={e => setInput(e.target.value)}
+            onKeyPress={e => {
               if (e.key === "Enter" && !e.shiftKey) {
                 e.preventDefault()
                 handleSendMessage()

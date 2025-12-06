@@ -38,7 +38,10 @@ const MAX_EMAIL_LENGTH = 254
  * Sanitize user input to prevent injection attacks
  * Encodes dangerous characters and validates against injection patterns
  */
-export function sanitizeInput(input: unknown, maxLength: number = MAX_INPUT_LENGTH): string {
+export function sanitizeInput(
+  input: unknown,
+  maxLength: number = MAX_INPUT_LENGTH
+): string {
   if (typeof input !== "string") {
     throw new Error("Input must be a string")
   }
@@ -85,7 +88,10 @@ export function sanitizeInput(input: unknown, maxLength: number = MAX_INPUT_LENG
 /**
  * Sanitize message input (allows newlines for chat)
  */
-export function sanitizeMessage(input: unknown, maxLength: number = MAX_MESSAGE_LENGTH): string {
+export function sanitizeMessage(
+  input: unknown,
+  maxLength: number = MAX_MESSAGE_LENGTH
+): string {
   if (typeof input !== "string") {
     throw new Error("Message must be a string")
   }
@@ -144,7 +150,7 @@ export function sanitizeEmail(email: unknown): string {
   }
 
   // Check for suspicious patterns in email
-  const dangersInEmail = DANGEROUS_PATTERNS.some((p) =>
+  const dangersInEmail = DANGEROUS_PATTERNS.some(p =>
     trimmed.toLowerCase().includes(p.toLowerCase())
   )
 
@@ -225,7 +231,7 @@ export function sanitizeJSON(input: unknown): Record<string, unknown> {
     } else if (typeof value === "boolean") {
       sanitized[sanitizedKey] = value
     } else if (Array.isArray(value)) {
-      sanitized[sanitizedKey] = value.map((item) => {
+      sanitized[sanitizedKey] = value.map(item => {
         if (typeof item === "string") {
           return sanitizeInput(item)
         }

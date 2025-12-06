@@ -5,6 +5,7 @@
 This document outlines the complete VanIA platform structure and what has been implemented.
 
 ### Core Architecture
+
 - **Framework**: Next.js 14 (App Router) with TypeScript
 - **Styling**: TailwindCSS with shadcn/ui components
 - **State Management**: Zustand stores
@@ -89,6 +90,7 @@ firebase/
 ## 🔒 Security Features Implemented
 
 ### Input Sanitization (`lib/sanitize.ts`)
+
 - ✅ Prevents XSS attacks
 - ✅ Prevents NoSQL injection
 - ✅ Prevents SQL injection
@@ -97,6 +99,7 @@ firebase/
 - ✅ Character and pattern validation
 
 ### Validation (`lib/validation.ts`)
+
 - ✅ Email validation
 - ✅ Password strength checking
 - ✅ Username validation
@@ -105,6 +108,7 @@ firebase/
 - ✅ URL validation
 
 ### API Security (`lib/security.ts`)
+
 - ✅ Rate limiting
 - ✅ IP blocking support
 - ✅ CORS headers
@@ -112,6 +116,7 @@ firebase/
 - ✅ Token verification preparation
 
 ### Firestore Rules (`firebase/firestore.rules`)
+
 - ✅ User data isolation
 - ✅ Admin-only sensitive operations
 - ✅ Prevents quota/role modification
@@ -121,6 +126,7 @@ firebase/
 ## 🎨 UI/UX Features Implemented
 
 ### Components
+
 - ✅ Animated hamburger menu (Framer Motion)
 - ✅ Animated loading dots (Grok-style)
 - ✅ Responsive sidebar
@@ -128,6 +134,7 @@ firebase/
 - ✅ Modern color scheme and theming
 
 ### Pages
+
 - ✅ Chat interface with sidebar
 - ✅ Support system with AI
 - ✅ License management
@@ -140,6 +147,7 @@ firebase/
 ### 1. Firebase Integration
 
 **Setup Steps:**
+
 1. Create Firebase project at https://firebase.google.com
 2. Enable Authentication (Email/Password)
 3. Create Firestore database
@@ -158,6 +166,7 @@ firebase/
    ```
 
 **In `lib/firebase.ts`:**
+
 - Implement user creation in Firestore
 - Implement user profile updates
 - Implement conversation persistence
@@ -167,6 +176,7 @@ firebase/
 ### 2. Complete API Routes
 
 #### Chat API (`app/api/chat/`)
+
 - [ ] `send-message` - Call OpenRouter, save to Firestore, handle streaming
 - [ ] `new` - Create new conversation
 - [ ] `delete/[id]` - Delete conversation
@@ -174,6 +184,7 @@ firebase/
 - [ ] `update/[id]` - Update conversation title
 
 Pattern:
+
 ```typescript
 // 1. Verify Firebase token
 // 2. Sanitize inputs
@@ -187,6 +198,7 @@ Pattern:
 ```
 
 #### Admin APIs (`app/api/admin/`)
+
 - [ ] `users` - List, search, filter users
 - [ ] `users/[id]/plan` - Change user plan
 - [ ] `users/[id]/ban` - Ban/unban user
@@ -201,6 +213,7 @@ Pattern:
 ### 3. Complete Admin Pages
 
 #### Users Management (`app/(app)/admin/users/page.tsx`)
+
 ```typescript
 Features:
 - Display user list with pagination
@@ -214,6 +227,7 @@ Features:
 ```
 
 Example component structure:
+
 ```typescript
 "use client"
 import { useEffect, useState } from "react"
@@ -223,25 +237,25 @@ import { User } from "@/types"
 export default function UsersPage() {
   const [users, setUsers] = useState<User[]>([])
   const [searchTerm, setSearchTerm] = useState("")
-  
+
   useEffect(() => {
     fetchUsers()
   }, [searchTerm])
-  
+
   const fetchUsers = async () => {
-    const response = await fetch(
-      `/api/admin/users?search=${searchTerm}`,
-      { headers: { Authorization: `Bearer ${token}` } }
-    )
+    const response = await fetch(`/api/admin/users?search=${searchTerm}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    })
     const data = await response.json()
     setUsers(data.users)
   }
-  
+
   // Render user table with actions
 }
 ```
 
 #### License Management (`app/(app)/admin/licenses/page.tsx`)
+
 ```typescript
 Features:
 - Generate new license keys
@@ -253,6 +267,7 @@ Features:
 ```
 
 #### AI Settings (`app/(app)/admin/settings/page.tsx`) - Founder Only
+
 ```typescript
 Features:
 - Edit global system prompt for chat
@@ -369,6 +384,7 @@ Create these collections in Firestore:
 ### 5. Environment Variables
 
 Update `.env.local` with:
+
 ```
 # Firebase
 NEXT_PUBLIC_FIREBASE_API_KEY=...
@@ -395,6 +411,7 @@ NODE_ENV=development
 ### 6. Frontend Features
 
 #### Chat Page Enhancements
+
 - [ ] Implement streaming response (Server-Sent Events)
 - [ ] Add model selection dropdown
 - [ ] Implement conversation renaming
@@ -403,12 +420,14 @@ NODE_ENV=development
 - [ ] Add reaction emojis
 
 #### Support Page
+
 - [ ] Link to support tickets
 - [ ] Show ticket history
 - [ ] Priority selection
 - [ ] Category/topic selection
 
 #### Settings Page
+
 - [ ] Change password functionality
 - [ ] Profile picture upload
 - [ ] Theme selection
@@ -418,6 +437,7 @@ NODE_ENV=development
 ## 🔄 Common Patterns
 
 ### API Route Pattern
+
 ```typescript
 import { NextRequest, NextResponse } from "next/server"
 import { sanitizeInput } from "@/lib/sanitize"
@@ -456,10 +476,7 @@ export async function POST(request: NextRequest) {
     })
 
     // 7. Return response
-    return NextResponse.json(
-      createApiResponse(true, { data }),
-      { status: 200 }
-    )
+    return NextResponse.json(createApiResponse(true, { data }), { status: 200 })
   } catch (error) {
     return NextResponse.json(
       createApiResponse(false, undefined, "Error message"),
@@ -470,6 +487,7 @@ export async function POST(request: NextRequest) {
 ```
 
 ### Page Component Pattern
+
 ```typescript
 "use client"
 
@@ -557,6 +575,7 @@ export default function Page() {
 ## ✨ Architecture Highlights
 
 ### Security-First Design
+
 - All inputs sanitized at multiple layers
 - RBAC with permission-based access
 - Firestore rules prevent unauthorized access
@@ -564,12 +583,14 @@ export default function Page() {
 - Security event logging
 
 ### Modular & Scalable
+
 - Zustand stores for clean state management
 - Utility functions for reusable logic
 - Component-based UI architecture
 - Type-safe with TypeScript throughout
 
 ### Modern & Responsive
+
 - Framer Motion animations
 - TailwindCSS responsive design
 - Mobile-friendly hamburger menu

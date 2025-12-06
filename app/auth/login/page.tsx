@@ -6,7 +6,13 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
 import { useAuthStore } from "@/lib/stores/useAuthStore"
 import { toast } from "sonner"
 import { sanitizeEmail } from "@/lib/sanitize"
@@ -95,7 +101,7 @@ export default function LoginPage() {
                 type="email"
                 placeholder="you@example.com"
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={e => setEmail(e.target.value)}
                 disabled={isLoading}
               />
             </div>
@@ -107,7 +113,7 @@ export default function LoginPage() {
                 type="password"
                 placeholder="••••••••"
                 value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={e => setPassword(e.target.value)}
                 disabled={isLoading}
               />
             </div>
@@ -120,12 +126,18 @@ export default function LoginPage() {
           <div className="mt-4 text-center space-y-2">
             <p className="text-sm text-muted-foreground">
               Don't have an account?{" "}
-              <Link href="/auth/register" className="text-primary hover:underline font-medium">
+              <Link
+                href="/auth/register"
+                className="text-primary hover:underline font-medium"
+              >
                 Sign up
               </Link>
             </p>
             <p className="text-sm">
-              <Link href="/auth/reset" className="text-muted-foreground hover:text-primary">
+              <Link
+                href="/auth/reset"
+                className="text-muted-foreground hover:text-primary"
+              >
                 Forgot password?
               </Link>
             </p>

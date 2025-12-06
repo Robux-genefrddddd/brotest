@@ -99,7 +99,8 @@ export async function POST(request: NextRequest) {
     // Mark license as used
     license.usageCount++
     license.usedAt = new Date()
-    license.status = license.usageCount >= license.usageLimit ? "used" : "active"
+    license.status =
+      license.usageCount >= license.usageLimit ? "used" : "active"
 
     logSecurityEvent({
       eventType: "LICENSE_VERIFICATION_SUCCESS",
@@ -116,7 +117,8 @@ export async function POST(request: NextRequest) {
       { status: 200 }
     )
   } catch (error) {
-    const message = error instanceof Error ? error.message : "License verification failed"
+    const message =
+      error instanceof Error ? error.message : "License verification failed"
     logSecurityEvent({
       eventType: "LICENSE_VERIFICATION_ERROR",
       ipAddress: request.headers.get("x-forwarded-for") || "unknown",
@@ -124,9 +126,8 @@ export async function POST(request: NextRequest) {
       severity: "medium",
     })
 
-    return NextResponse.json(
-      createApiResponse(false, undefined, message),
-      { status: 400 }
-    )
+    return NextResponse.json(createApiResponse(false, undefined, message), {
+      status: 400,
+    })
   }
 }
