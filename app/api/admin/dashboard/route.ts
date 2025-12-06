@@ -1,41 +1,55 @@
 import { NextRequest, NextResponse } from "next/server"
+import { createApiResponse, logSecurityEvent } from "@/lib/security"
 
 export async function GET(request: NextRequest) {
   try {
-    // Get user ID from Firebase Auth header
+    // Verify authentication
     const authHeader = request.headers.get("authorization")
-    if (!authHeader) {
+    if (!authHeader?.startsWith("Bearer ")) {
       return NextResponse.json(
-        { success: false, error: "Unauthorized" },
+        createApiResponse(false, undefined, "Unauthorized"),
         { status: 401 }
       )
     }
 
-    // TODO: Verify user role is admin or founder
-    // TODO: Fetch dashboard statistics from Firestore
-    // TODO: Return:
-    //   - Total users count
-    //   - Users by plan (free, classic, pro)
-    //   - Total messages sent
-    //   - Open support tickets count
-    //   - Maintenance mode status
-    //   - Recent actions log
+    // TODO: Verify user is admin or founder
+    // TODO: Fetch real stats from Firestore
+
+    // Placeholder stats (in production, aggregate from Firestore)
+    const stats = {
+      totalUsers: 42,
+      usersByPlan: {
+        free: 28,
+        classic: 10,
+        pro: 4,
+      },
+      totalMessages: 1234,
+      openTickets: 5,
+      maintenanceMode: false,
+    }
+
+    logSecurityEvent({
+      eventType: "ADMIN_DASHBOARD_ACCESSED",
+      ipAddress: request.headers.get("x-forwarded-for") || "unknown",
+      details: { action: "Dashboard view" },
+      severity: "low",
+    })
 
     return NextResponse.json(
-      {
-        success: true,
-        data: {
-          message: "Dashboard endpoint ready for Firestore integration",
-        },
-      },
+      createApiResponse(true, { stats }),
       { status: 200 }
     )
   } catch (error) {
+    const message = error instanceof Error ? error.message : "Failed to fetch dashboard"
+    logSecurityEvent({
+      eventType: "ADMIN_DASHBOARD_ERROR",
+      ipAddress: request.headers.get("x-forwarded-for") || "unknown",
+      details: { error: message },
+      severity: "medium",
+    })
+
     return NextResponse.json(
-      {
-        success: false,
-        error: error instanceof Error ? error.message : "Failed to fetch dashboard",
-      },
+      createApiResponse(false, undefined, message),
       { status: 400 }
     )
   }
