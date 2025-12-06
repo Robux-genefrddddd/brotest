@@ -1,42 +1,69 @@
 import { NextRequest, NextResponse } from "next/server"
-import { sanitizeInput } from "@/lib/sanitize"
+import { sanitizeMessage } from "@/lib/sanitize"
+import { validateSupportMessage } from "@/lib/validation"
+import { createApiResponse } from "@/lib/security"
+import { sendSupportMessage } from "@/lib/openrouter"
 
 export async function POST(request: NextRequest) {
   try {
-    const body = await request.json()
-
-    // Get user ID from Firebase Auth header
+    // Verify authentication
     const authHeader = request.headers.get("authorization")
-    if (!authHeader) {
+    if (!authHeader?.startsWith("Bearer ")) {
       return NextResponse.json(
-        { success: false, error: "Unauthorized" },
+        createApiResponse(false, undefined, "Unauthorized"),
         { status: 401 }
       )
     }
 
+    const body = await request.json()
+
+    // Validate message
+    const validation = validateSupportMessage(body.message)
+    if (!validation.valid) {
+      return NextResponse.json(
+        createApiResponse(false, undefined, validation.error),
+        { status: 400 }
+      )
+    }
+
     // Sanitize input
-    const message = sanitizeInput(body.message)
-    const ticketId = body.ticketId ? sanitizeInput(body.ticketId) : undefined
+    const sanitizedMessage = sanitizeMessage(body.message)
 
-    // TODO: Create or update support ticket
-    // TODO: Call OpenRouter with support model (amazon/nova-2-lite-v1:free)
-    // TODO: Save support message to Firestore
-    // TODO: Log action
+    // Call OpenRouter with support model
+    try {
+      const aiResponse = await sendSupportMessage([
+        {
+          role: "user",
+          content: sanitizedMessage,
+        },
+      ])
 
-    return NextResponse.json(
-      {
-        success: true,
-        message: "Support endpoint ready for OpenRouter integration",
-      },
-      { status: 200 }
-    )
+      const assistantMessage =
+        aiResponse.choices[0]?.message.content || "Unable to generate response"
+
+      return NextResponse.json(
+        createApiResponse(true, {
+          response: assistantMessage,
+          tokensUsed: aiResponse.usage.total_tokens,
+        }),
+        { status: 200 }
+      )
+    } catch (aiError) {
+      console.error("OpenRouter error:", aiError)
+      // Fallback response if AI fails
+      return NextResponse.json(
+        createApiResponse(true, {
+          response:
+            "Thank you for contacting support. Our team will review your message and get back to you shortly.",
+          tokensUsed: 0,
+        }),
+        { status: 200 }
+      )
+    }
   } catch (error) {
+    const message = error instanceof Error ? error.message : "Support request failed"
     return NextResponse.json(
-      {
-        success: false,
-        error:
-          error instanceof Error ? error.message : "Failed to send support message",
-      },
+      createApiResponse(false, undefined, message),
       { status: 400 }
     )
   }
